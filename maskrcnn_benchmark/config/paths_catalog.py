@@ -5,8 +5,41 @@ import os
 from copy import deepcopy
 
 class DatasetCatalog(object):
-    DATA_DIR = "datasets"
+    #DATA_DIR = "datasets"
+    DATA_DIR = ""
     DATASETS = {
+        "fsod_800_train": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800_train.json",
+        },
+        "fsod_800_train_oneclass": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800_train_oneclass.json",
+        },
+        "fsod_800_test": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800_test.json",
+        },
+        "fsod_800_test_oneclass": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800_test_oneclass.json",
+        },
+        "fsod_200_train": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_train.json",
+        },
+        "fsod_200_train_oneclass": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_train_oneclass.json",
+        },
+        "fsod_200_test": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_test.json",
+        },
+        "fsod_200_test_oneclass": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_test_oneclass.json",
+        },
         "coco_2017_train": {
             "img_dir": "coco/train2017",
             "ann_file": "coco/annotations/instances_train2017.json"
@@ -200,6 +233,15 @@ class DatasetCatalog(object):
             attrs["img_dir"] = os.path.join(data_dir, attrs["img_dir"])
             attrs["ann_dir"] = os.path.join(data_dir, attrs["ann_dir"])
             return dict(factory="CityScapesDataset", args=attrs)
+        elif "fsod" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            img_dir = "/mnt/cvgroupsouthcentral/fsod/images"
+            ann_file = f"/mnt/cvgroupsouthcentral/fsod/annotations/{name}.json"
+            args = dict(
+                root=os.path.join(data_dir, img_dir),
+                ann_file=os.path.join(data_dir, ann_file),
+            )
+
         raise RuntimeError("Dataset not available: {}".format(name))
 
 

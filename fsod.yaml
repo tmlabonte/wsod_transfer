@@ -1,0 +1,33 @@
+description: MSFT2020Boosting_FSOD
+
+target:
+  service: amlk8s
+  name: itpscusv100cl
+  vc: resrchvc
+
+environment:
+  image: pytorch/pytorch:1.7.0-cuda11.0-cudnn8-devel
+  setup:
+  - "curl https://get.docker.com | sh"
+  - "sudo systemctl --now enable docker"
+  - "distribution=$$(. /etc/os-release;echo $$ID$$VERSION_ID)"
+  - "curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -"
+  - "curl -s -L https://nvidia.github.io/nvidia-docker/$$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list"
+  - "sudo apt-get update"
+  - "sudo apt-get install -y nvidia-docker2"
+  - "sudo systemctl restart docker"
+  - "nvidia-docker build -t maskrcnn-benchmark --build_arg CUDA=11.0 --build_arg CUDNN=8 docker/"
+  
+code:
+  local_dir: $CONFIG_DIR/
+
+storage:
+  cvgroupsouthcentral:
+    storage_account_name: cvgroupsouthcentral
+    container_name: datasets
+
+jobs:
+- name: MSFT2020Boosting_FSOD
+  sku: G4
+  command:
+  - python -m torch.distributed.launch --nproc_per_node=4 tools/train_net.py --config-file wsod/fsod800_to_fsod200/ocud_it0.yaml && python -m torch.distributed.launch --nproc_per_node=4 tools/train_net.py --config-file wsod/fsod800_to_fsod200/mil_it0.yaml
