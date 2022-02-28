@@ -241,6 +241,10 @@ class DatasetCatalog(object):
                 root=os.path.join(data_dir, img_dir),
                 ann_file=os.path.join(data_dir, ann_file),
             )
+            return dict(
+                factory="COCODataset",
+                args=args,
+            )
 
         raise RuntimeError("Dataset not available: {}".format(name))
 

@@ -6,8 +6,12 @@ target:
   vc: resrchvc
 
 environment:
-  image: pytorch/pytorch:1.7.0-cuda11.0-cudnn8-devel
-  
+  image: tmlabonte/wsod_transfer:latest
+  setup:
+  - cuda_dir="maskrcnn_benchmark/csrc/cuda"
+  - perl -pe 's/AT_CHECK/TORCH_CHECK/' $$cuda_dir/deform_pool_cuda.cu $$cuda_dir/deform_conv_cuda.cu
+  - python setup.py build develop
+ 
 code:
   local_dir: $CONFIG_DIR/
 
