@@ -1,0 +1,28 @@
+description: MSFT2020Boosting_FSOD
+
+target:
+  service: amlk8s
+  name: itphyperdellcl1
+  vc: resrchvc
+
+environment:
+  image: tmlabonte/wsod_transfer:latest
+  setup:
+  - pip install numpy==1.21.0
+  - cuda_dir="maskrcnn_benchmark/csrc/cuda"
+  - perl -pe 's/AT_CHECK/TORCH_CHECK/' $$cuda_dir/deform_pool_cuda.cu $$cuda_dir/deform_conv_cuda.cu
+  - python setup.py build develop
+ 
+code:
+  local_dir: $CONFIG_DIR/
+
+storage:
+  cvgroupsouthcentral:
+    storage_account_name: cvgroupsouthcentral
+    container_name: datasets
+
+jobs:
+- name: MSFT2020Boosting_FSOD
+  sku: G4
+  command:
+  - python -m torch.distributed.launch --nproc_per_node=4 tools/train_net.py --config-file wsod/fsod800_to_fsod200/ocud_it0.yaml && python -m torch.distributed.launch --nproc_per_node=4 tools/train_net.py --config-file wsod/fsod800_to_fsod200/mil_it0.yaml
