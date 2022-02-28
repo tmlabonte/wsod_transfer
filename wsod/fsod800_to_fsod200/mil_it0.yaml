@@ -32,7 +32,7 @@ SOLVER:
   # set as 3500,5000 to be consistent with paper. roughly 8 epochs, lr decay at 6th epoch
   STEPS: (3500,) # (3340,)
   MAX_ITER: 5000 # 5011
-  IMS_PER_BATCH: 8
+  IMS_PER_BATCH: 4
   CHECKPOINT_PERIOD: 100000
 TEST:
   IMS_PER_BATCH: 4
