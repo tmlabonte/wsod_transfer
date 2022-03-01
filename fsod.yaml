@@ -3,10 +3,10 @@ description: MSFT2020Boosting_FSOD
 target:
   service: amlk8s
   name: itphyperdellcl1
-  vc: resrchvc
+  vc: msrhyper
 
 environment:
-  image: tmlabonte/wsod_transfer:latest
+  image: joshins/pytorch:1.7.0-cuda11.0-cudnn8-devel-maskrcnn-benchmark
  
 code:
   local_dir: $CONFIG_DIR/
