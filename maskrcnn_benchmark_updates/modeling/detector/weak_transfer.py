@@ -416,7 +416,7 @@ class WeakTransfer(nn.Module):
         if self.training:
             eye = torch.eye(self.WEAK.NUM_CLASSES, dtype=rpn_feat1[-1].dtype, device=rpn_feat1[-1].device)
             for t in targets1:
-                t.add_field("img_labels", eye[t.get_field("labels") - 1, :].sum(0).clamp_(0,1))
+                t.add_field("img_labels", eye[t.get_field("labels").long() - 1, :].sum(0).clamp_(0,1))
 
         self.det_container.model.to(images1.tensors.device)
 
