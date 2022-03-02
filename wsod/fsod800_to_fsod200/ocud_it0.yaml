@@ -20,10 +20,9 @@ INPUT:
   MIN_SIZE_TEST: 640
   MAX_SIZE_TEST: 1066
 SOLVER:
-  BASE_LR: 0.008
-  # set as 12000, 17500 to be consistent with the paper
-  STEPS: (12000,) # (11478,)
-  MAX_ITER: 17500 # 17217
+  BASE_LR: 0.004 # /2 because batch size /2
+  STEPS: (48000,) # x4 because len(fsod800)~=2*len(coco60) and batch size /2
+  MAX_ITER: 70000 # x4 because len(fsod800)~=2*len(coco60) and batch size /2
   WEIGHT_DECAY: 0.0001
   CHECKPOINT_PERIOD: 100000
-  IMS_PER_BATCH: 4
+  IMS_PER_BATCH: 4 # /2 due to memory requirement
