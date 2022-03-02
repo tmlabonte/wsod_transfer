@@ -2,12 +2,15 @@ description: MSFT2020Boosting_FSOD
 
 target:
   service: amlk8s
-  name: itphyperdellcl1
-  vc: msrhyper
-
+  name: itpseasiav100cl
+  vc: resrchvc
+  
 environment:
   image: joshins/pytorch:1.7.0-cuda11.0-cudnn8-devel-maskrcnn-benchmark
- 
+  setup:
+  - export MKL_THREADING_LAYER=GNU
+  - pip install numpy==1.21.0
+  
 code:
   local_dir: $CONFIG_DIR/
 
