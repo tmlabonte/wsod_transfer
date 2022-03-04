@@ -45,11 +45,11 @@ class DatasetCatalog(object):
             "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_test2.json",
         },
         "fgvc_trainval": {
-            "img_dir": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/trainval",
+            "img_dir": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/images",
             "ann_file": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/annotations/trainval.json",
         },
         "fgvc_test": {
-            "img_dir": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/test",
+            "img_dir": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/images",
             "ann_file": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/annotations/test.json",
         },
         "inaturalist_train": {
@@ -279,7 +279,7 @@ class DatasetCatalog(object):
                 name = "trainval"
             elif "test" in name:
                 name = "test"
-            img_dir = f"/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/{name}"
+            img_dir = f"/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/images"
             ann_file = f"/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/annotations/{name}.json"
             args = dict(
                 root=os.path.join(data_dir, img_dir),
