@@ -11,8 +11,8 @@ MODEL:
   ROI_HEADS:
     SCORE_THRESH: 0.01
 DATASETS:
-  TRAIN: ("fsod_800",)
-  TEST: ("fsod_200_test0", "fsod_200_test1", "fsod_200_test2", "fgvc_test", "inaturalist_val", "inaturalist_val_superclass")
+  TRAIN: ("fsod_800_train",)
+  TEST: ("fsod_200_test",)
 INPUT:
   IGNORE_CLS: True  # ignore class labels
   MIN_SIZE_TRAIN: (640,)

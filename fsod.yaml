@@ -1,14 +1,13 @@
 description: MSFT2020Boosting_FSOD
 
 target:
-  service: amlk8s
-  name: itpseasiav100cl
-  vc: resrchvc
+  service: aml
+  name: itphyperdellcl1
+  vc: msrhyper
   
 environment:
-  image: joshins/pytorch:1.7.0-cuda11.0-cudnn8-devel-maskrcnn-benchmark
+  image: joshins/pytorch:1.7.0-cuda11.0-cudnn8-devel-maskrcnn-benchmark-v2
   setup:
-  - export MKL_THREADING_LAYER=GNU
   - pip install numpy==1.21.0
   
 code:
@@ -23,4 +22,4 @@ jobs:
 - name: MSFT2020Boosting_FSOD
   sku: G4
   command:
-  - python -m torch.distributed.launch --nproc_per_node=4 tools/train_net.py --config-file wsod/fsod800_to_fsod200/ocud_it0.yaml && python -m torch.distributed.launch --nproc_per_node=4 tools/train_net.py --config-file wsod/fsod800_to_fsod200/mil_it0.yaml
+  - python -m torch.distributed.launch --nproc_per_node=4 tools/train_net.py --config-file wsod/fsod800_to_fsod200/ocud_it0.yaml

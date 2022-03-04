@@ -8,37 +8,65 @@ class DatasetCatalog(object):
     #DATA_DIR = "datasets"
     DATA_DIR = ""
     DATASETS = {
+        "fsod_800": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800.json",
+        },
         "fsod_800_train": {
             "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
             "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800_train.json",
-        },
-        "fsod_800_train_oneclass": {
-            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
-            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800_train_oneclass.json",
         },
         "fsod_800_test": {
             "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
             "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800_test.json",
         },
-        "fsod_800_test_oneclass": {
+        "fsod_200_train0": {
             "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
-            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_800_test_oneclass.json",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_train0.json",
         },
-        "fsod_200_train": {
+        "fsod_200_test0": {
             "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
-            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_train.json",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_test0.json",
         },
-        "fsod_200_train_oneclass": {
+        "fsod_200_train1": {
             "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
-            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_train_oneclass.json",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_train1.json",
         },
-        "fsod_200_test": {
+        "fsod_200_test1": {
             "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
-            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_test.json",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_test1.json",
         },
-        "fsod_200_test_oneclass": {
+        "fsod_200_train2": {
             "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
-            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_test_oneclass.json",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_train2.json",
+        },
+        "fsod_200_test2": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fsod/images",
+            "ann_file": "/mnt/cvgroupsouthcentral/fsod/annotations/fsod_200_test2.json",
+        },
+        "fgvc_trainval": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/trainval",
+            "ann_file": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/annotations/trainval.json",
+        },
+        "fgvc_test": {
+            "img_dir": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/test",
+            "ann_file": "/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/annotations/test.json",
+        },
+        "inaturalist_train": {
+            "img_dir": "/mnt/cvgroupsouthcentral/inaturalist",
+            "ann_file": "/mnt/cvgroupsouthcentral/inaturalist/annotations/train_2017_bboxes.json",
+        },
+        "inaturalist_val": {
+            "img_dir": "/mnt/cvgroupsouthcentral/inaturalist",
+            "ann_file": "/mnt/cvgroupsouthcentral/inaturalist/annotations/val_2017_bboxes.json",
+        },
+        "inaturalist_train_superclass": {
+            "img_dir": "/mnt/cvgroupsouthcentral/inaturalist",
+            "ann_file": "/mnt/cvgroupsouthcentral/inaturalist/annotations/train_2017_bboxes_superclass.json",
+        },
+        "inaturalist_val_superclass": {
+            "img_dir": "/mnt/cvgroupsouthcentral/inaturalist",
+            "ann_file": "/mnt/cvgroupsouthcentral/inaturalist/annotations/val_2017_bboxes_superclass.json",
         },
         "coco_2017_train": {
             "img_dir": "coco/train2017",
@@ -245,6 +273,46 @@ class DatasetCatalog(object):
                 factory="COCODataset",
                 args=args,
             )
+        elif "fgvc" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            if "trainval" in name:
+                name = "trainval"
+            elif "test" in name:
+                name = "test"
+            img_dir = f"/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/{name}"
+            ann_file = f"/mnt/cvgroupsouthcentral/fgvc-aircraft-2013b/annotations/{name}.json"
+            args = dict(
+                root=os.path.join(data_dir, img_dir),
+                ann_file=os.path.join(data_dir, ann_file),
+            )
+            return dict(
+                factory="COCODataset",
+                args=args,
+            )
+        elif "inaturalist" in name:
+            data_dir = DatasetCatalog.DATA_DIR
+            if "train" in name:
+                if "superclass" in name:
+                    name = "train_2017_bboxes_superclass"
+                else:
+                    name = "train_2017_bboxes"
+            elif "val" in name:
+                if "superclass" in name:
+                    name = "val_2017_bboxes_superclass"
+                else:
+                    name = "val_2017_bboxes"
+
+            img_dir = f"/mnt/cvgroupsouthcentral/inaturalist"
+            ann_file = f"/mnt/cvgroupsouthcentral/inaturalist/annotations/{name}.json"
+            args = dict(
+                root=os.path.join(data_dir, img_dir),
+                ann_file=os.path.join(data_dir, ann_file),
+            )
+            return dict(
+                factory="COCODataset",
+                args=args,
+            )
+
 
         raise RuntimeError("Dataset not available: {}".format(name))
 

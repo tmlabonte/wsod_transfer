@@ -29,7 +29,7 @@ def do_coco_evaluation(
         for limit in [100, 1000]:
             for area, suffix in areas.items():
                 stats = evaluate_box_proposals(
-                    predictions, dataset, area=area, limit=limit
+                    predictions, dataset, area=area, limit=limit, logger=logger,
                 )
                 key = "AR{}@{:d}".format(suffix, limit)
                 res.results["box_proposal"][key] = stats["ar"].item()
@@ -188,7 +188,7 @@ def prepare_for_coco_keypoint(predictions, dataset):
 
 # inspired from Detectron
 def evaluate_box_proposals(
-    predictions, dataset, thresholds=None, area="all", limit=None
+    predictions, dataset, thresholds=None, area="all", limit=None, logger=None,
 ):
     """Evaluate detection proposal recall metrics. This function is a much
     faster alternative to the official COCO API recall evaluation code. However,
@@ -220,6 +220,8 @@ def evaluate_box_proposals(
     area_range = area_ranges[areas[area]]
     gt_overlaps = []
     num_pos = 0
+    logger.info('test')
+    logger.info(len(predictions))
 
     for image_id, prediction in enumerate(predictions):
         original_id = dataset.id_to_img_map[image_id]
