@@ -222,7 +222,7 @@ def evaluate_box_proposals(
     num_pos = 0
     logger.info('test')
     logger.info(len(predictions))
-
+    print(len(predictions))
     for image_id, prediction in enumerate(predictions):
         original_id = dataset.id_to_img_map[image_id]
 
@@ -287,6 +287,15 @@ def evaluate_box_proposals(
 
         # append recorded iou coverage level
         gt_overlaps.append(_gt_overlaps)
+
+    if torch.numel(gt_overlaps) == 0:
+        return {
+            "ar": -1.,
+            "recalls": torch.tensor([]),
+            "gt_overlaps": torch.tensor([]),
+            "num_pos": 0,
+        }
+
     gt_overlaps = torch.cat(gt_overlaps, dim=0)
     gt_overlaps, _ = torch.sort(gt_overlaps)
 
