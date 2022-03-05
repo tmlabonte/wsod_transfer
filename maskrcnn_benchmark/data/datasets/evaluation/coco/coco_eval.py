@@ -288,7 +288,7 @@ def evaluate_box_proposals(
         # append recorded iou coverage level
         gt_overlaps.append(_gt_overlaps)
 
-    if torch.numel(gt_overlaps) == 0:
+    if not gt_overlaps:
         return {
             "ar": -1.,
             "recalls": torch.tensor([]),
