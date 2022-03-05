@@ -222,7 +222,7 @@ def evaluate_box_proposals(
     num_pos = 0
     logger.info('test')
     logger.info(len(predictions))
-    print(len(predictions))
+
     for image_id, prediction in enumerate(predictions):
         original_id = dataset.id_to_img_map[image_id]
 
@@ -290,7 +290,7 @@ def evaluate_box_proposals(
 
     if not gt_overlaps:
         return {
-            "ar": -1.,
+            "ar": torch.tensor(-1.),
             "recalls": torch.tensor([]),
             "gt_overlaps": torch.tensor([]),
             "num_pos": 0,
