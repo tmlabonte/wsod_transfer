@@ -9,6 +9,7 @@ from maskrcnn_benchmark.modeling.roi_heads.box_head.roi_box_feature_extractors i
 #from maskrcnn_benchmark.modeling.roi_heads.box_head.roi_box_predictors import make_roi_box_predictor
 from maskrcnn_benchmark.modeling.roi_heads.box_head.inference import make_roi_box_post_processor
 # from maskrcnn_benchmark.modeling.roi_heads.box_head.loss import make_roi_box_loss_evaluator
+from sparsemax import Sparsemax
 
 # def accuracy(output, target, topk=(1,)):
 #     """Computes the accuracy over the k top predictions for the specified values of k"""
@@ -273,7 +274,8 @@ class ROIBoxHead(torch.nn.Module):
 
         cls_logits, det_logits, box_regression, oicr_cls_logits = self.predictor(x, domain)
 
-        cls_prob = F.softmax(cls_logits, 1)  # R x (C+1)
+        #cls_prob = F.softmax(cls_logits, 1)  # R x (C+1)
+        cls_prob = Sparsemax(dim=1)(cls_logits)
         det_prob = det_logits.sigmoid()  # R x C, range [0,1]
 
         self.cls_prob, self.det_prob = cls_prob, det_prob

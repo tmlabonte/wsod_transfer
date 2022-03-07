@@ -1,9 +1,9 @@
-description: MSFT2020Boosting_FSOD
+description: MSFT2020Boosting_iNaturalist
 
 target:
   service: amlk8s
-  name: itpeusp100cl
-  vc: resrchvc
+  name: itphyperdgx2cl2
+  vc: hcrr06
   
 environment:
   image: tmlabonte/wsod_transfer:latest
@@ -19,7 +19,7 @@ storage:
     container_name: datasets
 
 jobs:
-- name: MSFT2020Boosting_FSOD
-  sku: G4
+- name: MSFT2020Boosting_FSOD_Split0
+  sku: G16
   command:
-  - python -m torch.distributed.launch --nproc_per_node=4 tools/train_net.py --config-file wsod/fsod800_to_fsod200/ocud_it0.yaml
+  - python -m torch.distributed.launch --nproc_per_node=16 tools/train_net.py --config-file wsod/fsod800_to_fsod200/inaturalist/mil_it0.yaml
