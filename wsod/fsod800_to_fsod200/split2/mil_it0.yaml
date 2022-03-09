@@ -1,4 +1,4 @@
-OUTPUT_DIR: "/mnt/cvgroupsouthcentral/ckpts/msft2020boosting/fsod800_to_fsod200/split2/mil_it0"
+OUTPUT_DIR: "/mnt/cvgroupsouthcentral/ckpts/msft2020boosting/fsod800_to_fsod200/split2_sparse/mil_it0"
 MODEL:
   META_ARCHITECTURE: "WeakTransfer"
   CLS_AGNOSTIC_BBOX_REG: False

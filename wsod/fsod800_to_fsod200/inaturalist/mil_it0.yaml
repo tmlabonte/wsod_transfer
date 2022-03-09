@@ -1,4 +1,4 @@
-OUTPUT_DIR: "/mnt/cvgroupsouthcentral/ckpts/msft2020boosting/fsod800_to_fsod200/inaturalist/mil_it0"
+OUTPUT_DIR: "/mnt/cvgroupsouthcentral/ckpts/msft2020boosting/fsod800_to_fsod200/inaturalist_finegrained/mil_it0"
 MODEL:
   META_ARCHITECTURE: "WeakTransfer"
   CLS_AGNOSTIC_BBOX_REG: False
@@ -9,9 +9,9 @@ MODEL:
     NMS: 0.4
     DETECTIONS_PER_IMG: 100
   ROI_BOX_HEAD:
-    NUM_CLASSES: 14
+    NUM_CLASSES: 2855
 WEAK:
-  NUM_CLASSES: 13
+  NUM_CLASSES: 2854
   MODE: "transfer"
   ROI_BETA: 5.0   # beta in the paper
   CFG2: "/mnt/cvgroupsouthcentral/ckpts/msft2020boosting/fsod800_to_fsod200/ocud_it0/config.yml"
@@ -24,8 +24,8 @@ INPUT:
   MIN_SIZE_TEST: 640
   MAX_SIZE_TEST: 1066
 DATASETS:
-  TRAIN: ("inaturalist_train_superclass",)
-  TEST: ("inaturalist_val_superclass",)
+  TRAIN: ("inaturalist_train",)
+  TEST: ("inaturalist_val",)
 SOLVER:
   BASE_LR: 0.008
   WEIGHT_DECAY: 0.0001
